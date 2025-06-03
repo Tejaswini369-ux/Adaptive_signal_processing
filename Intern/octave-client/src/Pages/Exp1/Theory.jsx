@@ -16,15 +16,17 @@ const Theory = () => {
         An adaptive filter is a computational device that iteratively models the relationship between the input and output signals of a filter. An adaptive filter self-adjusts the filter coefficients according to an adaptive algorithm. Least mean squares (LMS) algorithms are a class of adaptive filter used to mimic a desired filter by finding the filter coefficients that relate to producing the least mean square of the error signal (difference between the desired and the actual signal). It is a stochastic gradient descent method in that the filter is only adapted based on the error at the current time.
       </p>
       <p >Figure 1 shows the diagram of a typical adaptive filter.</p>
-      <img src={lms} alt='adaptive filter'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <img src={lms} alt="adaptive filter" style={{ maxWidth: "40%" }} />
+      </div>
       <pre className='font-serif leading-loose'>
         where<br/>
         x(n) is the input signal to a linear filter <br />
         y(n) is the corresponding output signal <br/>
         d(n) is an additional input signal to the adaptive filter<br/>
         e(n) is the error signal that denotes the difference between d(n) and y(n).
-      </pre>
-      <p className='ml-4 leading-loose'>
+      </pre><br />
+      <p>
         The linear filter can be different filter types such as finite impulse response (FIR) or infinite impulse response (IIR). An adaptive algorithm adjusts the coefficients of the linear filter iteratively to minimize the power of e(n). The LMS algorithm is an adaptive algorithm among others which adjusts the coefficients of FIR filters iteratively. Other adaptive algorithms include the recursive least square (RLS) algorithms.
       </p>
       <br/>
@@ -34,14 +36,18 @@ const Theory = () => {
       <ol className='list-decimal'>
         <li>
           <p>Calculates the output signal y(n) from the FIR filter.</p>
-          <img src={l1} alt='Output signal formula' />
+          <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+            <img src={l1} alt="Output signal formula" style={{ maxWidth: "40%" }} />
+          </div>
         </li>
         <li>
           Calculates the error signal e(n) by using the following equation: e(n) = d(n)–y(n)
         </li>
         <li>
           <p>Updates the filter coefficients by using the following equation:</p>
-          <img src={l2} alt='filter coefficients calculation' />
+          <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+            <img src={l2} alt="filter coefficients calculation" style={{ maxWidth: "27%" }} />
+          </div>
           <pre className='font-serif'>
             where <br />
             μ is the step size of the adaptive filter<br />
@@ -50,12 +56,10 @@ const Theory = () => {
           </pre>
         </li>
       </ol>
-      <br/>
       <p className='font-semibold'>Advantage </p>
-      <p>• The advantage of the LMS algorithm include simplicity, ease of implementation, good convergence environments, and improved time domain waveform and convergence effect with the proposed algorithm.</p>
-      <br/>
+      <p>The advantage of the LMS algorithm include simplicity, ease of implementation, good convergence environments, and improved time domain waveform and convergence effect with the proposed algorithm.</p>
       <p className='font-semibold'>Limitation</p>
-      <p>• The Least Mean Square (LMS) algorithm is familiar and simple to use for cancellation of noises. However, the low convergence rate and low signal to noise ratio are the limitations for this LMS algorithm.</p>
+      <p>The Least Mean Square (LMS) algorithm is familiar and simple to use for cancellation of noises. However, the low convergence rate and low signal to noise ratio are the limitations for this LMS algorithm.</p>
       <br/>
       <p className='font-bold text-xl text-green underline'>Recursive Least Squares(RLS)</p>
       <br/>
@@ -69,11 +73,15 @@ const Theory = () => {
         Mathematical Foundation:<br/>
         The RLS algorithm minimizes the following cost function (J(n)):
       </pre>
-      <img src={r1} alt='cost function calculation' />
+      <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+        <img src={r1} alt="cost function calculation" style={{ maxWidth: "20%" }} />
+      </div>
       <p>where e(i)  is the difference between the desired response d(i)  and the output y(i) produced by an FIR filter.</p>
-      <img src={r3} alt='error calculation' />
+      <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+        <img src={r3} alt="error calculation" style={{ maxWidth: "55%" }} />
+      </div>
       <pre className='font-serif'>Note that the tap weights of the FIR filter remain fixed during the observation interval.<br/>
-1≤ⅈ≤n  for which the cost function J(n) is defined.<br/>
+1 ≤ <i>i</i> ≤ n  for which the cost function J(n) is defined.<br/>
         The weighting factor  β(n,ⅈ)  has the property<br />
         0 &lt; β(n, i) ≤ 1 , i=1,2, …,n
       </pre>
@@ -92,7 +100,9 @@ const Theory = () => {
       <p>
         Initialize the algorithm by setting,
       </p>
-      <img src={r4} alt='cALC' />
+      <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+        <img src={r4} alt="cALC" style={{ maxWidth: "26%" }} />
+      </div>
       <p>where δ is the regularization parameter.</p>
       <p>
         The parameter δ  should be assigned a small value for high signal-to-noise ratio (SNR) and a large value for low SNR.
@@ -100,9 +110,13 @@ const Theory = () => {
       <p>
         For each instant of time n=1,2,…,  compute 
       </p>
-      <img src={r5} alt='compute' />
+      <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+        <img src={r5} alt="compute" style={{ maxWidth: "50%" }} />
+      </div>
       <p className='font-bold'>Signal Flow graph:</p>
-      <img src={img} alt='graph' />
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={img} alt="graph" style={{ maxWidth: "80%" }} />
+      </div>
       <p className='font-bold'>Advantages</p>
       <p>• Fast Convergence: The RLS algorithm converges faster than other adaptive filtering algorithms like the Least Mean Squares (LMS) algorithm.</p>
       <p>• Accuracy: It provides more accurate filter coefficient updates, leading to better performance in tracking signal changes.</p>

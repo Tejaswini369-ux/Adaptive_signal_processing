@@ -34,7 +34,9 @@ const Theory = () => {
       <p className='font-bold text-xl text-green underline'>Non-Stationary processes </p>
       <p>In a covariance stationary stochastic process, it is assumed that the means, variances and autocovariances are independent of time. In a non-stationary process, one or more of these assumptions is not true. </p>
       <p>A nonstationary process is characterized by a joint pdf or cdf that depends on time instants t<sub>1</sub>, …, t<sub>k</sub>. For a stationary random process, the mean and variance are both constants (i.e., neither of them is a function of time). </p>
-      <img src={randomprocesses} alt='random processes'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={randomprocesses} alt="random processes" style={{ maxWidth: "45%" }} />
+      </div>
       <p>Data points are often non stationary or have means, variances and covariances that change over the time. On-stationary behaviors can be trends, cycles, random walks, or combinations of the three. Non-stationary data, as a rule, are unpredictable and cannot be modelled or forecasted </p>
     </div>
   )

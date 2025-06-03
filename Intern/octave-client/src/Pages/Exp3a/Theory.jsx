@@ -34,8 +34,10 @@ const Theory = () => {
       <li>e(n) is the error signal, defined as the difference between the desired signal and the actual output.</li>
       </ul>
       The LMS algorithm is simple to implement and computationally efficient, making it suitable for real-time applications.
-      </p><br /><br />
-      <img src ={mvdr} alt='mvdr'/><br />
+      </p>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={mvdr} alt="mvdr" style={{ maxWidth: "55%" }} />
+      </div>
       <p className='font-bold text-xl text-green underline'>Monte Carlo Simulations </p>
       <p>Monte Carlo simulations are a statistical technique used to model and analyse the behaviour of complex systems through random sampling. In the context of beamforming, Monte Carlo simulations can be used to evaluate the performance of the MVDR beamformer under various scenarios, such as different signal-to-noise ratios, array geometries, and interference conditions.<br />
       The combination of MVDR beamforming with the LMS algorithm and Monte Carlo simulations provides a robust framework for adaptive beamforming. The LMS algorithm adapts the beamforming weights in real-time, ensuring that the MVDR criterion is satisfied even in changing environments. Monte Carlo simulations can be used to evaluate the performance of this adaptive approach under different scenarios and validate its effectiveness.</p>
@@ -55,32 +57,42 @@ const Theory = () => {
       </p>
       <p className='font-bold text-xl text-green underline'><br />AR process with LMS and monte-carlo runs </p>
       <p>Autoregressive models operate under the premise that past values have an effect on current values, which makes the statistical technique popular for analysing nature, economics, and other processes that vary over time. Multiple regression models forecast a variable using a linear combination of predictors, whereas autoregressive models use a combination of past values of the variable. </p>
-      <img src={arprocessanalyser} alt='ar process analyser'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={arprocessanalyser} alt="ar process analyser" style={{ maxWidth: "60%" }} />
+      </div>
       <p>We consider the example of M order AR process that is real valued. 
         The above figure shows the block diagram of model used to generate this process. 
         Its time domain description is governed by the M order difference equation<br /></p>
       <p align='center'>u(n)+a<sub>1</sub>u(n-1)+a<sub>2</sub>u(n-2)+...........+a<sub>3</sub>u(n-M)=v(n)<br /></p>
       <p>where v(n) is drawn from a white noise process of zero mean and variance σ<sup>2</sup>.</p>
-      <img src={arprocessgenerator} alt='ar process generator'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={arprocessgenerator} alt="ar process generator" style={{ maxWidth: "75%" }} />
+      </div>
       <p className='font-bold text-xl text-green underline'>The Adaptive filter </p>
-      <img src={adaptivefilter} alt='adaptive filter'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={adaptivefilter} alt="adaptive filter" style={{ maxWidth: "65%" }} />
+      </div>
       <p>We use the error e(n) between the desired response d(n) and the output of the filter y(n) to tune the weights of the filter. The Least Mean Squares (LMS) algorithm is the most popular adaptive algorithm due to its simplicity and robustness.<br />
         The LMS algorithm performs the following operations to update the coefficients of an adaptive FIR filter:
       </p>
       <ol className='list-decimal'>
-        <li>Calculates the output signal y(n) from the FIR filter. <br />
-        <img src={equation1} alt='equation1' /><br />
+        <li>Calculates the output signal y(n) from the FIR filter.
+        <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+          <img src={equation1} alt="equation1" style={{ maxWidth: "19%" }} />
+        </div>
         where u(i)is the tap-input vector at time i, defined by <i>u(i)=[u(i),u(i-1),…,u(i-M+1)]T,</i><br />
                   and w(n) is the tap-weight vector at time n, defined by <i>n=[w<sub>0</sub>(n),w<sub>1</sub>(n),…,w<sub>M-1</sub>(n)]T</i>
         </li>
         <li>Calculates the error signal e(n) by using the following equation: e(n) = d(n)–y(n) </li>
         <li>Updates the filter coefficients by using the following equation:<br />
-          <img src={equation2} alt='equation2' /><br />
-          where,    μ is the step size of the adaptive filter<br />
+          <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+            <img src={equation2} alt="equation2" style={{ maxWidth: "36%" }} />
+          </div>
+          where, μ is the step size of the adaptive filter<br />
             w(n) is the filter coefficients vector<br />
             u(n) is the filter input vector.
         </li>
-      </ol><br />
+      </ol>
       <p>A Monte Carlo simulation is used to model the probability of different outcomes in a process that cannot easily be predicted due to the intervention of random variable. It is a technique used to understand the impact of risk and uncertainty. A Monte Carlo simulation is used to tackle a range of problems in many fields, including investing, business, physics, and engineering. It is also referred to as a multiple probability simulation.<br />
         The Monte Carlo simulation is a mathematical technique that predicts possible outcomes of an uncertain event. Monte Carlo Simulation is a type of computational algorithm that uses repeated random sampling to obtain the likelihood of a range of results of occurring.
       </p>

@@ -7,7 +7,9 @@ const Theory = () => {
       <p className='font-bold text-xl text-green underline'>Kalman Filter</p>
       <p>The Kalman Filter algorithm is a powerful tool for estimating and predicting system states in the presence of uncertainty and is widely used as a fundamental component in applications such as target tracking, navigation, and control. The Kalman Filter predicts the future system state based on past estimations.<br /> </p>
       <p>Kalman filter is an algorithm that combines information about the state of a system using predictions based on a physical model and noisy measurements. It is called a “filter” because it is filtering out measurement noise. Kalman filter has many applications in robotics. For example, it can be used for localization of coordinates and velocity of a robot based on measurements of distance to certain landmarks. It’s widely used for filtering information from GPS sensors and radars. Kalman filters are often used to optimally estimate the internal states of a system in the presence of uncertain and indirect measurements.</p>
-      <img src={kalmanfilter} alt='kalman filter'/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <img src={kalmanfilter} alt="kalman filter" style={{ maxWidth: "55%" }} />
+      </div>
       <p>Kalman Filter performs on two main operations. They are,
         <ol className='list-decimal'>
           <li>Estimating the next state of the machine</li>
