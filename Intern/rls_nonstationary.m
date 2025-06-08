@@ -27,38 +27,43 @@ function rls_nonstationary(n, lambda, N, uniqueIdentifier)
         P = (P - k * x_vec' * P) / lambda;    
         w_hist(i, :) = w';  
     end  
+% Ensure output directory exists
+outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-    % Plot results  
-    figure; 
+figSize = [0, 0, 20, 5]; % inches
 
-    subplot(3, 1, 1); 
-    plot(d, 'DisplayName', 'Desired signal');  
-    hold on; 
-    plot(y, 'DisplayName', 'RLS output'); 
-    legend;  
-    title('RLS Output vs Desired Signal'); 
+% Plot: Desired vs RLS Output
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(d, 'DisplayName', 'Desired Signal');
+hold on;
+plot(y, 'DisplayName', 'RLS Output');
+legend;
+title('RLS Output vs Desired Signal');
+xlabel('Sample Index');
+ylabel('Amplitude');
+print(fig, fullfile(outputDir, sprintf('rls_nonstationary_output_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 
-    subplot(3, 1, 2); 
-    plot(e, 'DisplayName', 'Error');  
-    legend; 
-    title('Error Signal');  
+% Plot: Error Signal
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(e, 'DisplayName', 'Error');
+legend;
+title('Error Signal');
+xlabel('Sample Index');
+ylabel('Error');
+print(fig, fullfile(outputDir, sprintf('rls_nonstationary_error_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 
-    subplot(3, 1, 3); 
-    plot(vecnorm(w_hist, 2, 2), 'DisplayName', 'Norm of weight vector');  
-    legend; 
-    title('Norm of Weight Vector'); 
-
-    % Adjust the spacing
-    set(gcf, 'Position', [100, 100, 800, 1000]); % Increase the figure height
-    h = findobj(gcf,'Type','axes'); % Get handles to all axes
-    for i = 1:length(h)
-        pos = get(h(i), 'Position');
-        pos(2) = pos(2) - 0.05 * (i-1); % Adjust the y-position of each subplot
-        pos(4) = pos(4) - 0.03; % Adjust the height of each subplot to add more space
-        set(h(i), 'Position', pos);
-    end
-
-    saveas(gcf, sprintf('Outputs/rls_nonstationary_%s.png', uniqueIdentifier));
-    close(gcf);
-
+% Plot: Norm of Weight Vector
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(vecnorm(w_hist, 2, 2), 'DisplayName', 'Norm of Weight Vector');
+legend;
+title('Norm of Weight Vector');
+xlabel('Sample Index');
+ylabel('Norm');
+print(fig, fullfile(outputDir, sprintf('rls_nonstationary_weight_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 end

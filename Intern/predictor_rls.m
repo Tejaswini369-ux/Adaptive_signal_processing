@@ -49,40 +49,42 @@ function predictor_rls(n, sigma_nu, a, lambda,uniqueIdentifier)
     rndwalk = sum(temp1) / 100;
 
     % Plot desired output
-    figure
-    stem(1:n, u)
-    title('Desired Output')
-    xlabel('Number of Samples')
-    ylabel('Magnitude')
-    saveas(gcf, sprintf('Outputs/desired_output_%s.png', uniqueIdentifier));
-    close(gcf);
-
-    % Plot learning curve for RLS
-    figure
-    plot(1:n, mse, 'r')
-    title('Learning curve for RLS')
-    xlabel('Number of adaptation cycles, n')
-    ylabel('Mean square error')
-    saveas(gcf, sprintf('Outputs/learning_curve_%s.png', uniqueIdentifier));
-    close(gcf);
-
-    % Plot random walk behaviour
-    figure
-    plot(1:n, A, 'b')
-    hold on
-    plot(1:n, rndwalk, 'r')
-    title('Random Walk behaviour')
-    xlabel('Number of adaptation cycles, n')
-    ylabel('Tap Weight')
-    saveas(gcf, sprintf('Outputs/random_walk_%s.png', uniqueIdentifier));
-    close(gcf);
+    outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
 end
-% Parameters
-n = 200;
-sigma_nu = 0.1;
-a = -0.98;
-lambda = 0.99;  % Forgetting factor for RLS
 
-% Call the function
-predictor_rls(n, sigma_nu, a, lambda);
+figSize = [0, 0, 20, 5]; % inches
+
+% Plot: Desired Output
+fig = figure('Units', 'inches', 'Position', figSize);
+stem(1:n, u, 'filled');
+title('Desired Output');
+xlabel('Number of Samples');
+ylabel('Magnitude');
+print(fig, fullfile(outputDir, sprintf('desired_output_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Learning Curve for RLS
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:n, mse, 'r', 'LineWidth', 2);
+title('Learning Curve for RLS');
+xlabel('Number of Adaptation Cycles, n');
+ylabel('Mean Square Error');
+print(fig, fullfile(outputDir, sprintf('learning_curve_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Random Walk Behaviour
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:n, A, 'b', 'LineWidth', 2);
+hold on;
+plot(1:n, rndwalk, 'r', 'LineWidth', 1.5);
+title('Random Walk Behaviour');
+xlabel('Number of Adaptation Cycles, n');
+ylabel('Tap Weight');
+legend('Original Weight A', 'Random Walk', 'Location', 'best');
+print(fig, fullfile(outputDir, sprintf('random_walk_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+end
 

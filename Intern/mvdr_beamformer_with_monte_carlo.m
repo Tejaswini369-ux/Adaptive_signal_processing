@@ -51,25 +51,21 @@ interference = 1;     % Number of interferences
 
     % Average over all Monte Carlo runs
     G_dB_avg = mean(G_dB_all, 1);
-
-    % Plot averaged result
-    figure();
-    plot(phi, G_dB_avg, 'linewidth', 2);
-    legend('d=\lambda/2');
-    xlabel('Angle (\circ)');
-    ylabel('Magnitude (dB)');
-    title('MVDR Beamformed Output with Monte Carlo Runs');
-    saveas(gcf, sprintf('Outputs/monte_carlo_%s.png', uniqueIdentifier));
-    close(gcf);
-    grid on;
+outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
 end
 
-% Parameters
-N = 8;                % Array number of antennas
-theta_s = 30;         % DOA of signal
-theta_i = -60;        % DOA of interference
-ss = 1024;            %  No.of Snapshots  
-snr = [10 20];      % SNR values [SNR INR]
-num_runs = 100;       % Number of Monte Carlo runs
-% Call the function
- mvdr_beamformer_with_monte_carlo( N, theta_s, theta_i, ss, snr, num_runs);
+figSize = [0, 0, 10, 5]; % inches
+
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(phi, G_dB_avg, 'LineWidth', 2);
+legend('d=\lambda/2');
+xlabel('Angle (\circ)');
+ylabel('Magnitude (dB)');
+title('MVDR Beamformed Output with Monte Carlo Runs');
+grid on;
+print(fig, fullfile(outputDir, sprintf('monte_carlo_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+end

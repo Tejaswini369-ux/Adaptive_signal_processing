@@ -35,23 +35,32 @@ function kalman_filter_simulation(A, x0, num_steps, x0_est,uniqueIdentifier)
         P = (eye(2) - K * C) * P_pred;      % Updated error covariance
     end
 
-    % Plot results
-    figure(1);
-    plot(1:num_steps, x_true(1, :), 'g', 1:num_steps, x_est(1, :), 'b--');
-    legend('True State', 'Estimated State');
-    title('State 1');
-    xlabel('Time step');
-    ylabel('State value');
-    saveas(gcf, sprintf('Outputs/state_1_%s.png', uniqueIdentifier));
-    close(gcf);
+    outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-    figure(2);
-    plot(1:num_steps, x_true(2, :), 'g', 1:num_steps, x_est(2, :), 'b--');
-    legend('True State', 'Estimated State');
-    title('State 2');
-    xlabel('Time step');
-    ylabel('State value');
-    saveas(gcf, sprintf('Outputs/state_2_%s.png', uniqueIdentifier));
-    close(gcf);
+figSize = [0, 0, 10, 5]; % inches
+
+% Plot State 1
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:num_steps, x_true(1, :), 'g', 1:num_steps, x_est(1, :), 'b--');
+legend('True State', 'Estimated State');
+title('State 1');
+xlabel('Time step');
+ylabel('State value');
+print(fig, fullfile(outputDir, sprintf('state_1_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot State 2
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:num_steps, x_true(2, :), 'g', 1:num_steps, x_est(2, :), 'b--');
+legend('True State', 'Estimated State');
+title('State 2');
+xlabel('Time step');
+ylabel('State value');
+print(fig, fullfile(outputDir, sprintf('state_2_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
 end
 

@@ -139,8 +139,8 @@ const RMS = () => {
 );
 
   return (
-    <div className='flex flex-col space-y-10'>
       <div className="flex flex-row gap-5 space-x-5"> 
+    <div className='flex flex-col space-y-10'>
         <div className='flex flex-col'>
           <iframe
             srcDoc={codeHtml}
@@ -164,7 +164,17 @@ const RMS = () => {
             </button>
           </div>
         </div>
-        <div className="text-sm">
+        {loading && <SphereLoading/>}
+        {!loading && showImages && (
+          <div className=' mt-5 flex flex-col space-y-2'>
+            {imageUrls.map((url, index) => (
+              <img key={index} src={url} alt={`Output ${index + 1}`}/>
+            ))}
+          </div>
+        )}
+        
+      </div>
+       <div className="text-sm">
           <div className='flex flex-col items-center'>
             <p className='font-bold'>
             Select the input Parameters
@@ -208,15 +218,6 @@ const RMS = () => {
             </button>
           </div>
         </div>
-      </div>
-       {loading && <SphereLoading/>}
-        {!loading && showImages && (
-          <div className=' mt-5 flex flex-col space-y-2'>
-            {imageUrls.map((url, index) => (
-              <img key={index} src={url} alt={`Output ${index + 1}`}/>
-            ))}
-          </div>
-        )}
     </div>
   );
 }

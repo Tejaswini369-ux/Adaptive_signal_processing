@@ -44,29 +44,47 @@ function rls_denoise(lambda, inputFile, M, uniqueIdentifier)
         end
         B_rls(i) = w_rls' * A_i;
     end
+    outputDir = 'Outputs';
+    if ~exist(outputDir, 'dir')
+        mkdir(outputDir);
+    end
     % Display the signals
-    figure('Position', [100, 100, 800, 800]); % Increase figure height
-    subplot(4,1,1), plot(t, D);
+    figSize = [0, 0, 15, 5];  % inches
+
+    % Plot: Desired Signal
+    fig = figure('Units','inches','Position',figSize);
+    plot(t, D);
     title('Desired Signal');
     xlabel('Time (s)');
     ylabel('Amplitude');
-    subplot(4,1,2), plot(t, A);
+    print(fig, fullfile(outputDir, sprintf('rls_denoise_desired_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
+
+    % Plot: Noisy Signal
+    fig = figure('Units','inches','Position',figSize);
+    plot(t, A);
     title('Signal Corrupted with Noise');
     xlabel('Time (s)');
     ylabel('Amplitude');
-    subplot(4,1,3), plot(t, B_rls);
+    print(fig, fullfile(outputDir, sprintf('rls_denoise_noise_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
+
+    % Plot: Filtered Output
+    fig = figure('Units','inches','Position',figSize);
+    plot(t, B_rls);
     title('RLS Output Signal');
     xlabel('Time (s)');
     ylabel('Amplitude');
     legend('RLS Output');
-    subplot(4,1,4), plot(t, Err_rls);
+    print(fig, fullfile(outputDir, sprintf('rls_denoise_output_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
+
+    % Plot: Error Signal
+    fig = figure('Units','inches','Position',figSize);
+    plot(t, Err_rls);
     title('RLS Error Signal');
     xlabel('Time (s)');
     ylabel('Error');
-    % Adjust position to increase space between plots
-    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0, 1, 1]);  % Maximize figure window
-    set(gcf, 'PaperPositionMode', 'auto');  % Set figure size to be the same on printed paper
-    % Save figure with unique identifier
-    saveas(gcf, sprintf('Outputs/rls_denoise_%s.png', uniqueIdentifier));
-    close(gcf);
+    print(fig, fullfile(outputDir, sprintf('rls_denoise_error_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
 end

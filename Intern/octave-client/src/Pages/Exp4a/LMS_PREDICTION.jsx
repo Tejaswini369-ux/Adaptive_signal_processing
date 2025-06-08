@@ -89,8 +89,6 @@ if __name__ == "__main__":
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
 
-  
-
   const handleRun = async () => {
     setLoading(true);
     setShowImages(false);
@@ -127,12 +125,18 @@ if __name__ == "__main__":
     a.click();
   };
 
-  const SphereLoading = () => (
-    <div className="flex fixed inset-0 items-center justify-center bg-white bg-opacity-50">
-      <div className="text-sm font-bold">Loading...</div>
+   const SphereLoading = () => (
+  <div className="flex felx-col fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 ">
+    <div className="w-24 h-10">
+      <div className="relative w-full h-full overflow-hidden p-2 pl-3">
+        <p className='text-sm font-bold'>Loading...</p>
+        <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black">
+        </div>
+        
+      </div>
     </div>
-  );
-
+  </div>  
+);
   return (
     <div className='flex flex-row gap-5 justify-between space-x-5'>
       <div className="flex flex-col  space-y-10">
@@ -140,7 +144,7 @@ if __name__ == "__main__":
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="780"
+            width="750"
             height="300"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>

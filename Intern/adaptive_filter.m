@@ -33,42 +33,43 @@ function adaptive_filter(n, mu, sigma_nu, a,uniqueIdentifier)
         rndwalk = sum(temp1) / 100;
     endfor
 
-    figure
-    stem(1:n, u)
-    title('Desired Output')
-    xlabel('Number of Samples')
-    ylabel('Magnitude')
-    saveas(gcf, sprintf('Outputs/desired_output_%s.png', uniqueIdentifier));
-    close(gcf);
+    outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-    figure
-    plot(1:n, mse(1, :), 'r')
-    hold on
-    plot(1:n, mse(2, :), 'g')
-    plot(1:n, mse(3, :), 'b')
-    title('Learning curve for different step sizes')
-    xlabel('Number of adaptation cycles, n')
-    ylabel('Mean square error')
-    legend('mu=0.01', 'mu=0.05', 'mu=0.1')
-    saveas(gcf, sprintf('Outputs/learning_curve_%s.png', uniqueIdentifier));
-    close(gcf);
+figSize = [0, 0, 10, 5]; % inches
 
-    figure
-    plot(1:200, A, 'b')
-    hold on
-    plot(1:n, rndwalk, 'r')
-    title('Random Walk behaviour')
-    xlabel('Number of adaptation cycles, n')
-    ylabel('Tap Weight')
-    saveas(gcf, sprintf('Outputs/random_walk_%s.png', uniqueIdentifier));
-    close(gcf);
+% Plot: Desired Output
+fig = figure('Units', 'inches', 'Position', figSize);
+stem(1:n, u);
+title('Desired Output');
+xlabel('Number of Samples');
+ylabel('Magnitude');
+print(fig, fullfile(outputDir, sprintf('desired_output_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Learning Curve for Different Step Sizes
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:n, mse(1, :), 'r', 1:n, mse(2, :), 'g', 1:n, mse(3, :), 'b');
+title('Learning Curve for Different Step Sizes');
+xlabel('Number of adaptation cycles, n');
+ylabel('Mean Square Error');
+legend('mu=0.01', 'mu=0.05', 'mu=0.1');
+grid on;
+print(fig, fullfile(outputDir, sprintf('learning_curve_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Random Walk Behavior
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:200, A, 'b', 1:n, rndwalk, 'r');
+title('Random Walk Behaviour');
+xlabel('Number of adaptation cycles, n');
+ylabel('Tap Weight');
+legend('True Weight A', 'Estimated Weight');
+grid on;
+print(fig, fullfile(outputDir, sprintf('random_walk_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
 endfunction
 
-% Parameters
-n = 200;
-mu = [0.01 0.05 0.1];
-sigma_nu = 0.1;
-a = -0.98;
-
-% Call the function
-adaptive_filter(n, mu, sigma_nu, a)

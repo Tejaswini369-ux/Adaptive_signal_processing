@@ -156,13 +156,13 @@ kalmanFilterEstimation(N, dt, u, y0, v0, R);
   );
 
   return (
-    <div className="flex flex-col space-y-10">
       <div className="flex flex-row gap-5 space-x-5">
+    <div className="flex flex-col space-y-10">
         <div className="flex flex-col">
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="850"
+            width="750"
             height="300"
             className="outline border-4 p-2 rounded-sm border-blue-hover"
           ></iframe>
@@ -181,7 +181,16 @@ kalmanFilterEstimation(N, dt, u, y0, v0, R);
             </button>
           </div>
         </div>
-
+        {loading && <SphereLoading />}
+      {!loading && showImages && (
+        <div className="grid grid-cols-1">
+          {imageUrls.map((url, index) => (
+            <img key={index} src={url} alt={`Output ${index + 1}`} />
+          ))}
+        </div>
+      )}
+      </div>
+      
         <div className="text-sm">
           <div className="flex flex-col items-center">
             <p className="font-semibold">Select the input Parameters</p>
@@ -224,15 +233,6 @@ kalmanFilterEstimation(N, dt, u, y0, v0, R);
             </button>
           </div>
         </div>
-      </div>
-      {loading && <SphereLoading />}
-      {!loading && showImages && (
-        <div className="grid grid-cols-1">
-          {imageUrls.map((url, index) => (
-            <img key={index} src={url} alt={`Output ${index + 1}`} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

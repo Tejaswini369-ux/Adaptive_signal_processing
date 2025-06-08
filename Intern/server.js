@@ -32,7 +32,10 @@ app.post('/rls-process', async(req, res) => {
       }
 
       const imageUrls = [
-        `/rls_denoise_${uniqueIdentifier}.png`
+        `/rls_denoise_desired_${uniqueIdentifier}.png`,
+        `/rls_denoise_noise_${uniqueIdentifier}.png`,
+        `/rls_denoise_output_${uniqueIdentifier}.png`,
+        `/rls_denoise_error_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });
     });
@@ -87,7 +90,8 @@ app.post('/AR-process', async (req, res) => {
         return res.status(500).send(err);
       }
       const imageUrls = [
-        `/ar_process_${uniqueIdentifier}.png`
+        `/ar_process_signal_${uniqueIdentifier}.png`,
+        `/ar_process_noise_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });
     });
@@ -111,6 +115,7 @@ app.post('/lms_nonstationary-process', async (req, res) => {
         return res.status(500).send(err);
       }
       const imageUrls = [
+        `/lms_nonstationary_desired_${uniqueIdentifier}.png`,
         `/lms_nonstationary_output_${uniqueIdentifier}.png`,
         `/lms_nonstationary_error_${uniqueIdentifier}.png`,
         `/lms_nonstationary_weight_${uniqueIdentifier}.png`
@@ -136,7 +141,9 @@ app.post('/rls_nonstationary-process', async (req, res) => {
         return res.status(500).send(err);
       }
       const imageUrls = [
-        `/rls_nonstationary_${uniqueIdentifier}.png`
+        `/rls_nonstationary_output_${uniqueIdentifier}.png`,
+        `/rls_nonstationary_error_${uniqueIdentifier}.png`,
+        `/rls_nonstationary_weight_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });
     });

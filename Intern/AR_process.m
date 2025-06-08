@@ -58,30 +58,30 @@ function AR_process(n_steps, p, phi, sigma,uniqueIdentifier)
 
  
 
-    % Plot the time series 
+    % Plot the time series
 
-    figure; 
+outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-    subplot(2, 1, 1); 
+figSize = [0, 0, 20, 5]; % inches
 
-    plot(1:n_steps, X, 'b'); 
+% Plot: Simulated AR(p) Process
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:n_steps, X, 'b');
+title(['Simulated AR(', num2str(p), ') Stochastic Process']);
+xlabel('Time');
+ylabel('Value');
+print(fig, fullfile(outputDir, sprintf('ar_process_signal_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 
-    title(['Simulated AR(', num2str(p), ') Stochastic Process']); 
-
-    xlabel('Time'); 
-
-    ylabel('Value'); 
- 
-    subplot(2, 1, 2); 
-
-    plot(1:n_steps, epsilon, 'r'); 
-
-    title('Generated White Noise'); 
-
-    xlabel('Time'); 
-
-    ylabel('Noise Value'); 
-    saveas(gcf, sprintf('Outputs/ar_process_%s.png', uniqueIdentifier));
-    close(gcf);
-
-end 
+% Plot: Generated White Noise
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:n_steps, epsilon, 'r');
+title('Generated White Noise');
+xlabel('Time');
+ylabel('Noise Value');
+print(fig, fullfile(outputDir, sprintf('ar_process_noise_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+end

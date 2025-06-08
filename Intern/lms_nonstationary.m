@@ -19,27 +19,51 @@ e(i) = d(i) - y(i);
  w = w + mu * x_vec * e(i);
  w_hist(i, :) = w'; 
 end
- % Plot results 
-figure; 
-plot(d, 'DisplayName', 'Desired signal'); 
-hold on;
+ % Ensure output directory exists
+outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-figure;
- plot(y, 'DisplayName', 'LMS output'); 
+figSize = [0, 0, 20, 5]; % inches
+
+% Plot: Desired signal
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(d, 'DisplayName', 'Desired Signal');
 legend;
- title('LMS Output vs Desired Signal'); 
-saveas(gcf, sprintf('Outputs/lms_nonstationary_output_%s.png', uniqueIdentifier));
-close(gcf);
-figure;
- plot(e, 'DisplayName', 'Error');
- legend; 
+title('Desired Signal');
+xlabel('Sample Index');
+ylabel('Amplitude');
+print(fig, fullfile(outputDir, sprintf('lms_nonstationary_desired_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: LMS output
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(y, 'DisplayName', 'LMS Output');
+legend;
+title('LMS Output vs Desired Signal');
+xlabel('Sample Index');
+ylabel('Amplitude');
+print(fig, fullfile(outputDir, sprintf('lms_nonstationary_output_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Error signal
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(e, 'DisplayName', 'Error');
+legend;
 title('Error Signal');
-saveas(gcf, sprintf('Outputs/lms_nonstationary_error_%s.png', uniqueIdentifier));
-close(gcf);
-figure;
-plot(vecnorm(w_hist, 2, 2), 'DisplayName', 'Norm of weight vector');
-legend; 
+xlabel('Sample Index');
+ylabel('Error');
+print(fig, fullfile(outputDir, sprintf('lms_nonstationary_error_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot: Norm of weight vector
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(vecnorm(w_hist, 2, 2), 'DisplayName', 'Norm of Weight Vector');
+legend;
 title('Norm of Weight Vector');
-saveas(gcf, sprintf('Outputs/lms_nonstationary_weight_%s.png', uniqueIdentifier));
-close(gcf);
+xlabel('Sample Index');
+ylabel('Norm');
+print(fig, fullfile(outputDir, sprintf('lms_nonstationary_weight_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 end

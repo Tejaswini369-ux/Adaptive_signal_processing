@@ -154,7 +154,7 @@ const SphereLoading = () => (
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="650"
+            width="750"
             height="262"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>

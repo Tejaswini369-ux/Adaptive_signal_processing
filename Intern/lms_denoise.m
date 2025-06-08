@@ -1,96 +1,85 @@
-function lms_denoise(mu, inputFile, order,uniqueIdentifier)
-    % Function to apply LMS denoising to an EEG signal
-    %
-    % Parameters:
-    %   mu: Learning rate for LMS
-    %   inputFile: Name of the input .csv file containing the EEG signal
-    %   order: Order of the LMS filter
+function lms_denoise(mu, inputFile, order, uniqueIdentifier)
+    % LMS Denoising Function for EEG Signal
 
-    % Default values for delta and fs
-    experiment = 100;  % Number of experiments for averaging
-
-    % Clear and close all previous states
+    experiment = 100;
     clc;
     close all;
 
-    % Load the EEG signal from the input file
+    % Load EEG signal
     x = csvread(inputFile)';
-    
-    % Check the length of the signal
     iteration = length(x);
 
-    % Initialize optimal weight vector
-    %w_opt = [0.1, 0.4, 0.4, 0.1]'; % Adjust size according to `order`
-
-    % Initialize vectors to store the weights and the mean square deviation (MSD)
-    %MSD_LMS_main = zeros(iteration, 1); % Mean square deviation (MSD)
     w_LMS_main = zeros(order, 1);
+    A = x + 0.5 * randn(1, iteration); % Additive noise
 
-    % Generate the signal corrupted with noise
-    A = x + 0.5 * randn(1, iteration); % Simulated noisy signal
-    for i=1:experiment
-    % generate noise
-   % noise=0.1*randn(iteration,1);
-    % intialize adaptive filter coff zeros and input vector
-    w_LMS=zeros(order,1);
-    An=zeros(order,1);
-   % MSD_LMS=zeros(iteration);
+    for i = 1:experiment
+        w_LMS = zeros(order, 1);
+        An = zeros(order, 1);
+
+        for n = 1:iteration
+            An = [A(n); An(1:end-1)];
+            e_LMS = x(n) - An' * w_LMS;
+            w_LMS = w_LMS + mu * e_LMS * An;
+        end
+
+        w_LMS_main = w_LMS_main + w_LMS;
     end
 
-    % Apply the LMS algorithm
-    for n=1:iteration
-        An = [A(n); An(1:end-1)]; % input regressor vector
+    w_LMS_main = w_LMS_main / experiment;
 
+    estimated_output_signal = zeros(iteration, 1);
+    An = zeros(order, 1);
+    e_LMS = zeros(iteration, 1);
 
-        % Update the filter coefficients
-        e_LMS=x(n)-An'*w_LMS;
-        w_LMS=w_LMS+mu*e_LMS*An;
-
-        % Store the MSD
-       % MSD_LMS(n)=norm(w_LMS-w_opt,2)^2;
-
-    
-   % MSD_LMS_main=MSD_LMS_main+MSD_LMS;
-    w_LMS_main=w_LMS_main+w_LMS;
-
-    
-%MSD_LMS_main=MSD_LMS_main/experiment;
-w_LMS_main=w_LMS_main/experiment;
-    
-estimated_output_signal = zeros(iteration, 1);
+    for n = 1:iteration
+        An = [A(n); An(1:end-1)];
+        estimated_output_signal(n) = An' * w_LMS_main;
+        e_LMS(n) = x(n) - An' * w_LMS_main;
     end
-for n = 1:iteration
-   An = [A(n); An(1:end-1)]; % input regressor vector
 
-    estimated_output_signal(n) = An' * w_LMS_main;
-    e_LMS(n)=x(n)-An'*w_LMS_main;
+    % Output directory
+    outputDir = 'Outputs';
+    if ~exist(outputDir, 'dir')
+        mkdir(outputDir);
+    end
 
-end
+    % Plot configuration
+    figSize = [0, 0, 20, 5]; % inches
 
-% Display of signals
-figure;
-plot (x);
-title('Desired Signal');
-saveas(gcf, sprintf('Outputs/lms_denoise_desired_%s.png', uniqueIdentifier));
-close(gcf);
+    fig = figure('Units','inches','Position',figSize);
+    plot(x);
+    title('Desired Signal');
+    ylabel('Amplitude');
+    xlabel('Sample Index');
+    print(fig, fullfile(outputDir, sprintf('lms_denoise_desired_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
 
-figure;
-plot(A);
-title('Signal Corrupted with Noise');
-saveas(gcf, sprintf('Outputs/lms_denoise_noise_%s.png', uniqueIdentifier));
-close(gcf);
 
-figure;
-plot(estimated_output_signal);
-legend('LMS Output');
-title('Adaptive Filter Outputs');
-saveas(gcf, sprintf('Outputs/lms_denoise_output_%s.png', uniqueIdentifier));
-close(gcf);
+    % Plot: Noisy Signal
+    fig = figure('Units','inches','Position',figSize);
+    plot(A);
+    title('Signal Corrupted with Noise');
+    ylabel('Amplitude');
+    xlabel('Sample Index');
+    print(fig, fullfile(outputDir, sprintf('lms_denoise_noise_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
 
-figure;
-plot(e_LMS);
-title('LMS Error Signal');
-saveas(gcf, sprintf('Outputs/lms_denoise_error_%s.png', uniqueIdentifier));
-close(gcf);
+    % Plot: Filtered Output
+    fig = figure('Units','inches','Position',figSize);
+    plot(estimated_output_signal);
+    title('Adaptive Filter Outputs');
+    ylabel('Amplitude');
+    xlabel('Sample Index');
+    legend('LMS Output');
+    print(fig, fullfile(outputDir, sprintf('lms_denoise_output_%s.png', uniqueIdentifier)));
+    close(fig);
 
+    % Plot: Error Signal
+    fig = figure('Units','inches','Position',figSize);
+    plot(e_LMS);
+    title('LMS Error Signal');
+    ylabel('Amplitude');
+    xlabel('Sample Index');
+    print(fig, fullfile(outputDir, sprintf('lms_denoise_error_%s.png', uniqueIdentifier)), '-dpng');
+    close(fig);
 end

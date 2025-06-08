@@ -30,17 +30,21 @@ function lms_equal(N, signal_power, noise_power, mu,uniqueIdentifier)
     endfor
 
     n = 1:N;
-    semilogy(n, mse);  % MSE versus time
-    xlabel('Adaptation cycles');
-    ylabel('MSE');
-    title('Adaptation cycles vs. MSE');
-    saveas(gcf, sprintf('Outputs/lms_eq_%s.png', uniqueIdentifier));
-    close(gcf);
-endfunction
-N = 500;  % Number of samples
-signal_power = 1;  % Signal power
-noise_power = 0.01;  % Noise power
-mu = 0.001;  % Step size for LMS algorithm
+   outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-lms_equal(N, signal_power, noise_power, mu);
+figSize = [0, 0, 20, 5]; % inches
+
+fig = figure('Units', 'inches', 'Position', figSize);
+semilogy(n, mse, 'LineWidth', 2);  % MSE versus time on log scale
+xlabel('Adaptation cycles');
+ylabel('MSE');
+title('Adaptation cycles vs. MSE');
+grid on;
+print(fig, fullfile(outputDir, sprintf('lms_eq_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+endfunction
 

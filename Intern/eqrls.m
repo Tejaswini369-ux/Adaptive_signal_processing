@@ -42,21 +42,22 @@ function eqrls(W, xi_R, N, SNR_dB,L,delay,uniqueIdentifier)
     MSE_avg = MSE_sum / num_runs;
 
     % Plot results
-    figure;
-    plot(10*log10(MSE_avg));
-    xlabel('Sample Index');
-    ylabel('MSE (dB)');
-    title(sprintf('Adaptive Equalisation RLS'));
-    saveas(gcf, sprintf('Outputs/rls_eq_%s.png', uniqueIdentifier));
-    close(gcf);
-    grid on;
+    outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
 end
 
-% Example usage:
-W = 3.1;
-xi_R = 11.124;
-N = 1000;
-SNR_dB = 30;
- L = 11; % Number of taps in the equalizer
- delay = 7; % Delay for desired response
-eqrls(W, xi_R, N, SNR_dB,L,delay);
+figSize = [0, 0, 10, 5]; % inches
+
+% Plot: RLS Equalisation MSE
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(10*log10(MSE_avg), 'LineWidth', 2);
+xlabel('Sample Index');
+ylabel('MSE (dB)');
+title('Adaptive Equalisation RLS');
+grid on;
+print(fig, fullfile(outputDir, sprintf('rls_eq_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+end
+

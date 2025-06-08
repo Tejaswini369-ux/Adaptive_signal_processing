@@ -40,43 +40,44 @@ function lms_ar(N, u_init, mu,uniqueIdentifier)
         w_lms(:, i) = w_lms(:, i-1) + mu * [v(i); v(i-1)] * e(i);
     endfor
 
-    % Plot mean square error
-    figure(1)
-    plot(e.^2);
-    title('Mean Square Error vs Number of Iterations')
-    xlabel('Number of Iterations')
-    ylabel('Mean Square Error')
-    saveas(gcf, sprintf('Outputs/comparision_%s.png', uniqueIdentifier));
-    close(gcf);
+    outputDir = 'Outputs';
+if ~exist(outputDir, 'dir')
+    mkdir(outputDir);
+end
 
-    % Plot random walk of w1
-    figure(2)
-    plot(1:N, w_lms(1, :));
-    hold on
-    plot(1:N, ones(1, N) * w_opt(1))
-    title('Random Walk of w1')
-    xlabel('Number of Iterations')
-    ylabel('w1')
-    legend('Estimated w1', 'Optimal w1')
-    saveas(gcf, sprintf('Outputs/random_walk_of_w1_%s.png', uniqueIdentifier));
-    close(gcf);
-    hold off
+figSize = [0, 0, 20, 5]; % inches
 
-    % Plot random walk of w2
-    figure(3)
-    plot(1:N, w_lms(2, :));
-    hold on
-    plot(1:N, ones(1, N) * w_opt(2))
-    title('Random Walk of w2')
-    xlabel('Number of Iterations')
-    ylabel('w2')
-    legend('Estimated w2', 'Optimal w2')
-    saveas(gcf, sprintf('Outputs/random_walk_of_w2_%s.png', uniqueIdentifier));
-    close(gcf);
-    hold off
+% Plot mean square error
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(e.^2);
+title('Mean Square Error vs Number of Iterations');
+xlabel('Number of Iterations');
+ylabel('Mean Square Error');
+print(fig, fullfile(outputDir, sprintf('comparision_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
 
+% Plot random walk of w1
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:N, w_lms(1, :));
+hold on;
+plot(1:N, ones(1, N) * w_opt(1));
+title('Random Walk of w1');
+xlabel('Number of Iterations');
+ylabel('w1');
+legend('Estimated w1', 'Optimal w1');
+print(fig, fullfile(outputDir, sprintf('random_walk_of_w1_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+
+% Plot random walk of w2
+fig = figure('Units', 'inches', 'Position', figSize);
+plot(1:N, w_lms(2, :));
+hold on;
+plot(1:N, ones(1, N) * w_opt(2));
+title('Random Walk of w2');
+xlabel('Number of Iterations');
+ylabel('w2');
+legend('Estimated w2', 'Optimal w2');
+print(fig, fullfile(outputDir, sprintf('random_walk_of_w2_%s.png', uniqueIdentifier)), '-dpng');
+close(fig);
+hold off;
 endfunction
-N = 500;
-u_init = [0.5, 1];
-mu = 0.1;
-lms_ar(N, u_init, mu);
