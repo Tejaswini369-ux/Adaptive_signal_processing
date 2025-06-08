@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LMS_PREDICTION from './LMS_PREDICTION';
+import LMS_PREDICTION from './exp4a';
 
 const Simulation = () => {
 
