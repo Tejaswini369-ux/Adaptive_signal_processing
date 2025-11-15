@@ -9,9 +9,9 @@ import mvdr from './mvdr.png'
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Minimum Variance Distortion less Beamformer Using LMS and Monte-Carlo Runs<br /><br />Introduction to Beamforming</p>
-      <p>Beamforming is a signal processing technique used in sensor arrays for directional signal transmission or reception. This technique involves combining signals from multiple sensors in such a way that signals from a particular direction are constructively combined while those from other directions are destructively interfered. Beamforming is widely used in applications such as radar, sonar, wireless communications, and audio signal processing.</p>
-      <p className='font-bold text-xl text-green underline'>Minimum Variance Distortion less Response (MVDR) Beamformer </p>
+      <p className='text-lg font-semibold underline pb-2'>Minimum Variance Distortion less Beamformer Using LMS and Monte-Carlo Runs<br />Introduction to Beamforming</p>
+      <p>Beamforming is a signal processing technique used in sensor arrays for directional signal transmission or reception. This technique involves combining signals from multiple sensors in such a way that signals from a particular direction are constructively combined while those from other directions are destructively interfered. Beamforming is widely used in applications such as radar, sonar, wireless communications, and audio signal processing.</p><br />
+      <p className='text-lg font-semibold underline pb-2'>Minimum Variance Distortion less Response (MVDR) Beamformer </p>
       <p>The MVDR beamformer, also known as the Capon beamformer, is designed to minimize the output power of the beamformer subject to the constraint that the response in the direction of the desired signal remains unity. This can be mathematically expressed as:<br />
           <i>min<sub>w</sub>w<sup>H</sup>HRw subject to w<sup>H</sup>a(θ) = 1</i><br />
           where:
@@ -23,8 +23,8 @@ const Theory = () => {
           The solution to this optimization problem is given by:<br />
           <i>w<sub>MvDR</sub> =R<sup>-1</sup>a(θ)/a<sup>H</sup>R<sup>-1</sup>a(θ)</i><br />
           This solution ensures that the desired signal is preserved while minimizing the power from interference and noise.
-      </p>
-      <p className='font-bold text-xl text-green underline'>Least Mean Squares (LMS) Algorithm </p>
+      </p><br />
+      <p className='text-lg font-semibold underline pb-2'>Least Mean Squares (LMS) Algorithm </p>
       <p>The Least Mean Squares (LMS) algorithm is an adaptive filter used to find the filter coefficients that minimize the mean square error between the desired signal and the actual output of the filter. In the context of beamforming, the LMS algorithm can be used to iteratively adjust the beamforming weights to minimize the output power. The update rule for the weights is given by:<br />
       <i>w(n + 1) = w(n) - μx(n)ⅇ*(n)</i></p>
       <p>where:
@@ -37,25 +37,26 @@ const Theory = () => {
       </p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={mvdr} alt="mvdr" style={{ maxWidth: "55%" }} />
-      </div>
-      <p className='font-bold text-xl text-green underline'>Monte Carlo Simulations </p>
+      </div><br />
+      <p className='text-lg font-semibold underline pb-2'>Monte Carlo Simulations </p>
       <p>Monte Carlo simulations are a statistical technique used to model and analyse the behaviour of complex systems through random sampling. In the context of beamforming, Monte Carlo simulations can be used to evaluate the performance of the MVDR beamformer under various scenarios, such as different signal-to-noise ratios, array geometries, and interference conditions.<br />
       The combination of MVDR beamforming with the LMS algorithm and Monte Carlo simulations provides a robust framework for adaptive beamforming. The LMS algorithm adapts the beamforming weights in real-time, ensuring that the MVDR criterion is satisfied even in changing environments. Monte Carlo simulations can be used to evaluate the performance of this adaptive approach under different scenarios and validate its effectiveness.</p>
-      <p className='font-bold text-xl text-green underline'>Advantages </p>
+      <br />
+      <p className='text-lg font-semibold underline pb-2'>Advantages </p>
       <p>
         <ul className='list-disc'>
         <li><b>Real-Time Adaptation:</b> The LMS algorithm allows for real-time adjustment of the beamforming weights, making the system adaptable to changing conditions.<br /></li>
         <li><b>Performance Evaluation:</b> Monte Carlo simulations provide a comprehensive evaluation of the system's performance under various scenarios, ensuring robustness.</li>
         </ul>
-      </p>
-      <p className='font-bold text-xl text-green underline'>Disadvantages </p>
+      </p><br />
+      <p className='text-lg font-semibold underline pb-2'>Disadvantages </p>
       <p>
         <ul className='list-disc'>
           <li><b>Computational Complexity:</b> While the LMS algorithm is computationally efficient, the overall complexity can increase with the size of the sensor array and the number of Monte Carlo runs.<br /></li>
           <li><b>Convergence:</b> Ensuring the convergence of the LMS algorithm to the optimal solution requires careful selection of the step size parameter μ.</li>
         </ul>
       </p>
-      <p className='font-bold text-xl text-green underline'><br />AR process with LMS and monte-carlo runs </p>
+      <p className='text-lg font-semibold underline pb-2'><br />AR process with LMS and monte-carlo runs </p>
       <p>Autoregressive models operate under the premise that past values have an effect on current values, which makes the statistical technique popular for analysing nature, economics, and other processes that vary over time. Multiple regression models forecast a variable using a linear combination of predictors, whereas autoregressive models use a combination of past values of the variable. </p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={arprocessanalyser} alt="ar process analyser" style={{ maxWidth: "60%" }} />
@@ -68,7 +69,7 @@ const Theory = () => {
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={arprocessgenerator} alt="ar process generator" style={{ maxWidth: "75%" }} />
       </div>
-      <p className='font-bold text-xl text-green underline'>The Adaptive filter </p>
+      <p className='text-lg font-semibold underline pb-2'>The Adaptive filter </p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={adaptivefilter} alt="adaptive filter" style={{ maxWidth: "65%" }} />
       </div>

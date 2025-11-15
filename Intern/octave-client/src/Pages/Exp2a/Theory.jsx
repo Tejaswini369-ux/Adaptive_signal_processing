@@ -4,7 +4,7 @@ import kalmanfilter from './kalmanfilter.png'
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Kalman Filter</p>
+      <p className='text-lg font-semibold underline pb-2'>Kalman Filter</p>
       <p>The Kalman Filter algorithm is a powerful tool for estimating and predicting system states in the presence of uncertainty and is widely used as a fundamental component in applications such as target tracking, navigation, and control. The Kalman Filter predicts the future system state based on past estimations.<br /> </p>
       <p>Kalman filter is an algorithm that combines information about the state of a system using predictions based on a physical model and noisy measurements. It is called a “filter” because it is filtering out measurement noise. Kalman filter has many applications in robotics. For example, it can be used for localization of coordinates and velocity of a robot based on measurements of distance to certain landmarks. It’s widely used for filtering information from GPS sensors and radars. Kalman filters are often used to optimally estimate the internal states of a system in the presence of uncertain and indirect measurements.</p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -18,7 +18,8 @@ const Theory = () => {
       </p>
       <p>Kalman filters combine two sources of information, the predicted states and noisy measurements, to produce optimal, unbiased state estimates. The essential part of the Kalman filter is to construct initial ensemble. The initial ensemble contains information about the initial states, parameters and their uncertainties.<br /></p>
       <p>The Kalman filter is a set of mathematical equations that provides an efficient computational means to estimate the state of a process in a way that minimizes the mean squared error. As an optimal recursive data processing algorithm, the Kalman filter combines all available measurement data plus prior knowledge about the system and measuring devices to produce an estimate of the desired variables in such a manner that error is minimized statistically. It processes all available measurements regardless of their precision to estimate the current value of the variables of interest. In addition, it does not require all previous data to be stored and reprocessed every time a new measurement is taken.<br /></p>
-      <p className='font-bold text-xl text-green underline'>Kalman Filter equations</p>
+      <br />
+      <p className='text-lg font-semibold underline pb-2'>Kalman Filter equations</p>
       <p>Kalman Filter maintains the estimates of the state and the error covariance matrix of the state estimation.</p>
       <p><b>Notations:</b><br />
       X(t|t) — Estimate of x(t) given measurements z(t) and z (t-1), …<br />

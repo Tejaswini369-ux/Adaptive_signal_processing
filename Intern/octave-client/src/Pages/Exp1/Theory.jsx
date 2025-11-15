@@ -11,7 +11,7 @@ import img from './img.png'
 const Theory = () => {
   return (
     <div className='leading-loose '>
-      <p className='font-bold text-xl text-green underline'>Least Mean Square (LMS) Adaptive Filter Concepts</p>
+      <p className='text-lg font-semibold underline pb-2'>Least Mean Square (LMS) Adaptive Filter Concepts</p>
       <p >
         An adaptive filter is a computational device that iteratively models the relationship between the input and output signals of a filter. An adaptive filter self-adjusts the filter coefficients according to an adaptive algorithm. Least mean squares (LMS) algorithms are a class of adaptive filter used to mimic a desired filter by finding the filter coefficients that relate to producing the least mean square of the error signal (difference between the desired and the actual signal). It is a stochastic gradient descent method in that the filter is only adapted based on the error at the current time.
       </p>
@@ -61,8 +61,7 @@ const Theory = () => {
       <p className='font-semibold'>Limitation</p>
       <p>The Least Mean Square (LMS) algorithm is familiar and simple to use for cancellation of noises. However, the low convergence rate and low signal to noise ratio are the limitations for this LMS algorithm.</p>
       <br/>
-      <p className='font-bold text-xl text-green underline'>Recursive Least Squares(RLS)</p>
-      <br/>
+      <p className='text-lg font-semibold underline pb-2'>Recursive Least Squares(RLS)</p>
       <p>
         Adaptive filtering is a signal processing technique that automatically adjusts the filter coefficients to achieve the desired filtering characteristics. The Recursive Least Squares (RLS) algorithm is a powerful adaptive filtering algorithm known for its rapid convergence and accuracy. The RLS algorithm is applied in various adaptive filtering scenarios, such as noise cancellation, echo cancellation, and system identification. This theory provides a detailed explanation of the RLS algorithm, its mathematical basis, and its application in adaptive filtering.
       </p>
@@ -128,10 +127,9 @@ const Theory = () => {
         •	Memory Requirement: It requires storage of the inverse correlation matrix, which can be memory-intensive for large filter orders.
       </p>
       <br />
-      <p className='font-bold text-xl text-green underline'>
+      <p className='text-lg font-semibold underline pb-2'>
         Compare RLS and LMS Adaptive Filter Algorithms
       </p>
-      <br />
       <p>
         Least mean squares (LMS) algorithms represent the simplest and most easily applied adaptive algorithms. The recursive least squares (RLS) algorithms, on the other hand, are known for their excellent performance and greater fidelity, but they come with increased complexity and computational cost. In performance, RLS approaches the Kalman filter in adaptive filtering applications with somewhat reduced required throughput in the signal processor. Compared to the LMS algorithm, the RLS approach offers faster convergence and smaller error with respect to the unknown system at the expense of requiring more computations.
       </p>

@@ -6,7 +6,7 @@ import flowchart from './flowchart.png'
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Amplitude Envelope</p>
+      <p className='text-lg font-semibold underline pb-2'>Amplitude Envelope</p>
       <p>
       Amplitude envelope refers to the changes in the amplitude of a sound over time, and is an influential property as it affects our perception of timbre. 
       This is an important property of sound, because it is what allows us to effortlessly identify sounds, and uniquely distinguish them from other sounds. 

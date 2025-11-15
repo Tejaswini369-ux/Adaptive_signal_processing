@@ -12,7 +12,7 @@ import equation11 from './equation11.png'
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Kalman filter With unforced dynamic model and noiseless state space model.</p>
+      <p className='text-lg font-semibold underline pb-2'>Kalman filter With unforced dynamic model and noiseless state space model.</p>
       <p>The Kalman filter is a recursive algorithm for estimating the state of a linear dynamic system using noisy observations. his summary focuses on a specialized form of the Kalman filter applied to an unforced dynamic model with a noiseless state-space representation, as described by Sayed and Kailath (1994). 
          This model is characterized by the absence of process noise and a simplified state transition influenced by a scalar parameter. This special unforced dynamical model holds the key to the formulation of a general framework for deriving the RLS family of adaptive filtering algorithms<br /><br />
       </p>

@@ -127,7 +127,7 @@ export default function Dashboard() {
     { label: 'Simulation', path: 'simulation' },
     { label: 'Post-test', path: 'post-test' },
     { label: 'References', path: 'references' },
-    {label :'Contact',path:'contact'},
+    {label :'Contributors',path:'contact'},
     { label: 'Feedback', path: 'feedback' }
     
   ];

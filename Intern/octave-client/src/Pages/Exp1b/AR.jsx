@@ -15,6 +15,7 @@ const AR = () => {
   const [imageUrls, setImageUrls] = useState(new Array(5).fill(image));
   const [loading, setLoading] = useState(false);
   const [showImages, setShowImages] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     const order = inputs.find(input => input.id === 'p').value;
@@ -38,52 +39,7 @@ const AR = () => {
     const generatedCode = `
 function AR_process(n_steps, p, phi, sigma, uniqueIdentifier)
     % Function to simulate an AR(p) stochastic process
-    %
-    % Parameters:
-    %   n_steps: Number of time steps
-    %   p: Order of the AR process
-    %   phi: AR coefficients (array)
-    %   sigma: Standard deviation of the noise
-
-    % Ensure the number of AR coefficients matches the order
-    if length(phi) ~= p
-        error('The number of AR coefficients must match the specified order p');
-    end
-
-    % Generate white noise
-    epsilon = normrnd(0, sigma, [n_steps, 1]);
-
-    % Initialize time series
-    X = zeros(n_steps, 1);
-
-    % Start with initial values based on noise
-    for t = 1:p
-        X(t) = epsilon(t);
-    end
-
-    % Simulate AR(p) process
-    for t = (p+1):n_steps
-        X(t) = sum(phi .* X(t-1:-1:t-p)') + epsilon(t);
-    end
-
-    % Plot the time series
-    figure;
-    subplot(2, 1, 1);
-    plot(1:n_steps, X, 'b');
-    title(['Simulated AR(', num2str(p), ') Stochastic Process']);
-    xlabel('Time');
-    ylabel('Value');
-    saveas(gcf, sprintf('Outputs/simulated_stochastic_process_%s.png', uniqueIdentifier));
-    close(gcf);
-
-    % Plot the noise
-    subplot(2, 1, 2);
-    plot(1:n_steps, epsilon, 'r');
-    title('Generated White Noise');
-    xlabel('Time');
-    ylabel('Noise Value');
-    saveas(gcf, sprintf('Outputs/generated_white_noise_%s.png', uniqueIdentifier));
-    close(gcf);
+    % ...
 end
     `;
     setCode(generatedCode);
@@ -101,12 +57,7 @@ end
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/AR-process', data, {
-        headers: {
-          // 'Content-Type': 'multipart/form-data'
-        }
-      });
-
+      const response = await axios.post('http://localhost:5000/AR-process', data);
       setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
       setShowImages(true);
     } catch (error) {
@@ -126,67 +77,134 @@ end
   };
 
   const SphereLoading = () => (
-    <div className="flex felx-col fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 ">
+    <div className="flex fixed inset-0 items-center justify-center bg-white bg-opacity-50">
       <div className="w-20 h-10">
         <div className="relative w-full h-full overflow-hidden p-2 pl-3">
-          <p className='font-sans text-sm font-semibold'>Loading...</p>
-          <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black">
-          </div>
+          <p className="font-sans text-sm font-semibold">Loading...</p>
+          <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black"></div>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className='flex flex-row gap-5 space-x-5'>
-      <div className="flex flex-col space-y-10 ">
-        <div className='flex flex-col'>
-          <iframe
-            srcDoc={codeHtml}
-            title="Generated Code"
-            width="800"
-            height="300"
-            className='outline border-4 p-2 rounded-sm border-blue-hover'
-          ></iframe>
-          <div className='flex justify-between text-sm'>
+    <>
+      {/* === READ INSTRUCTIONS BUTTON === */}
+      <div className="flex justify-end w-full px-5 mt-2 mb-3 -mt-8">
+        <button
+          onClick={() => setShowInstructions(true)}
+          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow font-medium"
+        >
+          Read Instructions
+        </button>
+      </div>
+
+      {/* === INSTRUCTIONS MODAL === */}
+      {showInstructions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl max-w-lg w-full h-[80vh] overflow-auto">
+
+            <h2 className="text-xl font-bold mb-4 text-gray-800">Instructions</h2>
+
+            <ul className="list-decimal ml-6 space-y-2 text-gray-700 text-sm">
+
+              <li>This experiment simulates an <b>AR(p) Autoregressive Stochastic Process</b>.</li>
+
+              <li>Set the input parameters:
+                <ul className="list-disc ml-6">
+                  <li><b>n_steps</b> – Length of the time-series</li>
+                  <li><b>p</b> – Model order</li>
+                  <li><b>σ</b> – Standard deviation of white noise</li>
+                </ul>
+              </li>
+
+              <li>Provide <b>AR coefficients</b> (φ₁, φ₂, ..., φₚ).  
+                <p className="text-xs ml-6">Tip: Ensure coefficients satisfy the stationarity condition.</p>
+              </li>
+
+              <li>Click <b>Generate Code</b> to see MATLAB code for AR simulation.</li>
+
+              <li>Click <b>Submit & Run</b> to:
+                <ul className="list-disc ml-6">
+                  <li>Simulate AR process</li>
+                  <li>Generate stochastic time series</li>
+                  <li>Generate white noise plot</li>
+                  <li>Display output figures</li>
+                </ul>
+              </li>
+
+              <li>You can download the MATLAB file using the <b>Download</b> button.</li>
+
+            </ul>
+
             <button
-              className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8"
-              onClick={handleDownload}
+              onClick={() => setShowInstructions(false)}
+              className="mt-6 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow"
             >
-              Download
+              Close
             </button>
-            <button
-              className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8"
-              onClick={handleRun}
-            >
-              Submit & Run
-            </button>
+
           </div>
         </div>
-        {loading && <SphereLoading />}
-      {!loading && showImages && (
-        <div className='grid grid-cols-1 '>
-          {imageUrls.map((url, index) => (
-            <img key={index} src={url} alt={`Output ${index + 1}`} />
-          ))}
-        </div>
       )}
+
+      {/* === MAIN SIMULATION LAYOUT === */}
+      <div className='flex flex-row gap-5 space-x-5'>
         
-      </div>
-       
+        {/* LEFT SIDE: CODE + BUTTONS + IMAGES */}
+        <div className="flex flex-col space-y-10 ">
+          <div className='flex flex-col'>
+            <iframe
+              srcDoc={codeHtml}
+              title="Generated Code"
+              width="800"
+              height="300"
+              className='outline border-4 p-2 rounded-sm border-blue-hover'
+            ></iframe>
+
+            <div className='flex justify-between text-sm'>
+              <button
+                className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8"
+                onClick={handleDownload}
+              >
+                Download
+              </button>
+
+              <button
+                className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8"
+                onClick={handleRun}
+              >
+                Submit & Run
+              </button>
+            </div>
+          </div>
+
+          {loading && <SphereLoading />}
+          {!loading && showImages && (
+            <div className='grid grid-cols-1'>
+              {imageUrls.map((url, index) => (
+                <img key={index} src={url} alt={`Output ${index + 1}`} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT SIDE: INPUT CONTROLS */}
         <div className="text-sm">
-          <div className='flex flex-col items-center '>
-            <p className='font-semibold'>
-              Select the input Parameters
-            </p>
+          
+          {/* ========== INPUT PARAMETERS ========== */}
+          <div className='flex flex-col items-center'>
+            <p className='font-semibold'>Select the input Parameters</p>
+
             <div className='bg-blue-hover px-5 py-3 mt-2 rounded-xl'>
               {inputs.map(input => (
                 <div key={input.id} className="flex flex-col items-center">
                   <label htmlFor={input.id} className="block mb-2">
                     <pre className='font-serif'>
-                      <span>{input.min} ≤ </span> {input.label} <span> ≤  {input.max} </span>
+                      <span>{input.min} ≤ </span> {input.label} <span> ≤ {input.max}</span>
                     </pre>
                   </label>
+
                   <div className="flex flex-row items-center">
                     <input
                       type="number"
@@ -195,31 +213,35 @@ end
                       max={input.max}
                       step={input.step}
                       value={input.value}
-                      onChange={(e) => handleInputChange(input.id, e.target.value)}
+                      onChange={(e) => handleInputChange(input.id, parseFloat(e.target.value))}
                       className="w-16 text-center border border-gray-300 rounded-lg py-1 focus:outline-none focus:border-blue-500"
                     />
+
                     <input
                       type="range"
                       min={input.min}
                       max={input.max}
                       step={input.step}
                       value={input.value}
-                      onChange={(e) => handleInputChange(input.id, e.target.value)}
-                      className="flex-grow ml-2 "
+                      onChange={(e) => handleInputChange(input.id, parseFloat(e.target.value))}
+                      className="flex-grow ml-2"
                     />
                   </div>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* ========== AR COEFFICIENTS ========== */}
           <div className='bg-blue-hover px-5 py-3 mt-2 rounded-xl'>
             {coefficients.map((coeff, index) => (
               <div key={index} className="flex flex-col items-center">
                 <label htmlFor={`coeff-${index}`} className="block mb-2">
                   <pre className='font-serif'>
-                    <span>{-1} ≤ </span> {`Coefficient ${index + 1}`} <span> ≤  {1} </span>
+                    <span>-1 ≤ </span> {`Coefficient ${index + 1}`} <span> ≤ 1</span>
                   </pre>
                 </label>
+
                 <div className="flex flex-row items-center">
                   <input
                     type="number"
@@ -231,6 +253,7 @@ end
                     onChange={(e) => handleCoefficientChange(index, parseFloat(e.target.value))}
                     className="w-16 text-center border border-gray-300 rounded-lg py-1 focus:outline-none focus:border-blue-500"
                   />
+
                   <input
                     type="range"
                     min={-1}
@@ -244,13 +267,16 @@ end
               </div>
             ))}
           </div>
+
           <div className="flex flex-col">
             <button onClick={handleGenerateCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
               Generate Code
             </button>
           </div>
+          
         </div>
-    </div>
+      </div>
+    </>
   );
 }
 

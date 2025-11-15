@@ -15,12 +15,12 @@ import equation6 from './equation6.png'
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Adaptive Equalization</p>
+      <p className='text-lg font-semibold underline pb-2'>Adaptive Equalization</p>
       <p>In adaptive equalization, the filters adopt themselves to the dispersive effects of the channel.  An adaptive equalizer automatically adapts to time-varying properties of the communication channel. The technique of equalization is used to reduce the additive noise. These equalizers are majorly kept in the receiver side. The theory behind this is that the filter characteristics should be optimized. The filter coefficients of an adaptive filter are based on error signal <i>e(n)</i> between the filter output <i> d&#770;(n) </i> and desired signal <i>d(n)</i>.Goal of equalizers is to overcome the negative effects of the channel.</p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={adaptiveequalization} alt="adaptiveequalization" style={{ maxWidth: "70%" }} />
       </div>
-      <p className='font-bold text-xl text-green underline'>Adaptive equalization using LMS </p>
+      <p className='text-lg font-semibold underline pb-2'>Adaptive equalization using LMS </p>
       <p>
         Least mean squares (LMS) algorithms are a class of adaptive filter used to mimic a desired filter by finding the filter coefficients that relate to producing the least mean squares of the error signal (difference between the desired and the actual signal). It is a stochastic gradient descent method in that the filter is only adapted based on the error at the current time. LMS filter is built around a transversal (i.e. tapped delay line) structure. Two practical features, simple to design, yet highly effective in performance have made it highly popular in various application. LMS filter employ, small step size statistical theory, which provides a fairly accurate description of the transient behaviour.
         It also includes H∞ theory which provides the mathematical basis for the deterministic robustness of the LMS filters. As mentioned before
@@ -34,7 +34,7 @@ const Theory = () => {
           <img src={convergence} alt="convergence" style={{ maxWidth: "67%" }} />
         </div>
       </p>
-      <p className='font-bold text-xl text-green underline'>Adaptive equalization using RLS </p>
+      <p className='text-lg font-semibold underline pb-2'>Adaptive equalization using RLS </p>
       <p>RLS is advantageous in adaptive equalization for its ability to quickly adapt to channel variations. It provides a high level of performance in environments where the channel characteristics change rapidly, ensuring that the equalizer can effectively mitigate ISI and maintain signal integrity.</p>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
         <img src={blockdiagram} alt="blockdiagram" style={{ maxWidth: "60%" }} />
@@ -56,8 +56,8 @@ const Theory = () => {
         </div>
         where <i>y(n)</i> represents the input vector to the equalizer.<br />
         where <i>P(n)</i> is the inverse correlation matrix and <i>k(n)</i> is the gain vector.
-      </p>
-      <p className='font-bold text-xl text-green underline'>Adaptive Prediction via LMS </p>
+      </p><br />
+      <p className='text-lg font-semibold underline pb-2'>Adaptive Prediction via LMS </p>
       <p>Commonly used filters can be divided into three kinds: FIR (Finite Impulse Response) filter, IIR (Infinite Impulse Response) filter, and adaptive filter. 
         The precondition of FIR filter and IIR filter is that the statistical characteristics of input signals are known. The premise design condition of adaptive filter is that some of the statistical characteristics of input signals are unknown. 
         The performance indexes of filter can be replaced by the estimated value of unknown signal. In order to analyse the adaptive filter based on LMS (Least Mean Square) algorithm, the principle and application of adaptive filter should be introduced, and the simulation results based on the statistical experimental method are presented according to the principle and structure of LMS algorithm. 
@@ -75,7 +75,7 @@ const Theory = () => {
         Accepting these assumptions, the adaptive filter must predict the future values of the desired signal based on past values. 
         When s(n) is periodic and the filter is long enough to remember previous values, this structure with the delay in the input signal, can perform the prediction. 
       </p><br />
-      <p className='font-bold text-xl text-green underline'>Adaptive Prediction via RLS </p>
+      <p className='text-lg font-semibold underline pb-2'>Adaptive Prediction via RLS </p>
       <p>
         Adaptive prediction involves estimating future values of a signal based on past observations. This is critical in applications such as speech coding, echo cancellation, and financial time series forecasting. The goal is to minimize the prediction error, which is the difference between the actual signal and its predicted value.<br />
         The RLS algorithm is preferred for adaptive prediction due to its recursive nature and rapid convergence. Unlike other algorithms such as the Least Mean Squares (LMS), RLS minimizes the weighted sum of squared errors with an exponential weighting factor, providing a robust and efficient means of updating prediction parameters.
